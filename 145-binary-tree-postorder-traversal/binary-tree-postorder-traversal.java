@@ -14,19 +14,47 @@
  * }
  */
 class Solution {
+    // public List<Integer> postorderTraversal(TreeNode root) {
+    //     List<Integer> ans = new ArrayList<>();
+    //     postOrder(root,ans);
+    //     return ans;
+    // }
+
+    // private void postOrder(TreeNode root, List ans){
+    //     if(root == null){
+    //         return;
+    //     }
+        
+    //     postOrder(root.left,ans);
+    //     postOrder(root.right,ans);
+    //     ans.add(root.val);
+    // }
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
-        postOrder(root,ans);
-        return ans;
-    }
+        Stack<TreeNode> st = new Stack<>();
+        TreeNode curr = root;
+        while(curr != null || !st.isEmpty()){
+            if(curr != null){
+                st.push(curr);
+                curr = curr.left;
+            }
+            else{
+                TreeNode temp = st.peek().right;
+                if(temp == null){
+                    temp = st.pop();
+                    ans.add(temp.val);
+                    while(!st.isEmpty() && temp == st.peek().right ){
+                        temp = st.pop();
+                        ans.add(temp.val);
+                    }
+                }else{
+                    curr = temp;
+                }
 
-    private void postOrder(TreeNode root, List ans){
-        if(root == null){
-            return;
+            }
         }
-        
-        postOrder(root.left,ans);
-        postOrder(root.right,ans);
-        ans.add(root.val);
+
+        return ans;
+
     }
 }
