@@ -43,7 +43,7 @@ class Solution {
 
     public int dfsheight(TreeNode root){
         if(root == null) return 0;
-
+       
         int lh = dfsheight(root.left);
         int rh = dfsheight(root.right);
 
