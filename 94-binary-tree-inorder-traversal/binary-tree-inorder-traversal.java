@@ -30,24 +30,37 @@ class Solution {
     //     inOrder(root.right,ans);        
     // }
 
-     public List<Integer> inorderTraversal(TreeNode root) {
-     List <Integer> ans = new ArrayList<>();
-     Stack <TreeNode> st = new Stack<>();
-    
-    if(root == null) return ans;
+//    
+public List<Integer> inorderTraversal(TreeNode root){
 
-    while(true){
-        if(root!=null){
-            st.push(root);
-            root = root.left;
-        }else{
-            if(st.isEmpty()) break ;
-            root = st.pop();
-            ans.add(root.val);
-            root = root.right;
+    List<Integer> inorder =new ArrayList<>();
+    TreeNode curr = root;
+
+    while(curr != null){
+        if(curr.left == null){
+            inorder.add(curr.val);
+            curr = curr.right;
         }
+        else{
+            TreeNode temp = curr.left;
+            while(temp.right!=null  && temp.right != curr){
+                temp = temp.right;
+            }
+                if(temp.right == null){
+                    //create thread and move cur
+                    temp.right = curr;
+                    curr = curr.left;
+                }else{
+                    //remove the thread andd to inorderr 
+                    temp.right = null;
+                    inorder.add(curr.val);
+                    curr = curr.right;
+                }
+            }
     }
-    
-return ans;
-     }
+    return inorder;
+}
+
+
+
 }
